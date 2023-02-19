@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EMantranaBackendApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(EMantranaBackendApplication.class, args);
+		System.out.println("ll");
 	}
 
 }
