@@ -1,5 +1,7 @@
 package com.example.emantranabackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,15 +15,28 @@ public class Admin {
     private String userId;
     @Column(name = "password",nullable = false)
     private String password;
+    @Column(name = "roles",nullable = false)
+    private String roles;
 
     public Admin() {
 
     }
 
-    public Admin(int id, String userId, String password) {
+    public Admin(int id,
+                 @JsonProperty("userId")String userId,
+                 @JsonProperty("password")String password, String roles) {
         this.id = id;
         this.userId = userId;
         this.password = password;
+        this.roles = roles;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public int getId() {
