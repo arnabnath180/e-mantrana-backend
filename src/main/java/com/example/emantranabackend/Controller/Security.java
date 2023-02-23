@@ -22,7 +22,7 @@ public class Security {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @RequestMapping(value = "/authenticate",method = RequestMethod.POST)
+    @RequestMapping(value = "/e-mantrana/admin/login",method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken
             (@RequestBody AdminAuthenticationRequest authenticationRequest)
             throws Exception{

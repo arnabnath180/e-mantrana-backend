@@ -27,8 +27,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/hello").hasRole("ADMIN")
-                .antMatchers("/authenticate").permitAll()
+                .antMatchers("/e-mantrana/api/admin").hasRole("ADMIN")
+                .antMatchers("/e-mantrana/admin/login").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
