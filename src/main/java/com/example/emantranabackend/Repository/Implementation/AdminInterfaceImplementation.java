@@ -22,9 +22,10 @@ public class AdminInterfaceImplementation implements AdminInterface {
     @Override
     public boolean addDoctor(DoctorRegistrationRequestDTO doctor){
         Session currentSession=entityManager.unwrap(Session.class);
-        Doctor doc=new Doctor(doctor.getFname(), doctor.getLname(), doctor.getPassword(),
+        String password="abcd11$";
+        Doctor doc=new Doctor(doctor.getFname(), doctor.getLname(), password,
                 doctor.getType(), doctor.getEmail(), doctor.getPh_number(),
-                doctor.getPatient_count());
+                0);
         currentSession.persist(doc);
         entityManager.clear();
         Query q=currentSession.createQuery("from Doctor d where d.email=:email");
@@ -35,9 +36,11 @@ public class AdminInterfaceImplementation implements AdminInterface {
         List<TimeTableDTO> list=doctor.getTimeTable();
         for(Object o:list){
             TimeTableDTO timeTableDTO=(TimeTableDTO) o;
+            java.sql.Time tin=new java.sql.Time(timeTableDTO.getTime_in()*1000-(5*3600+30*60)*1000);
+            java.sql.Time tout=new java.sql.Time(timeTableDTO.getTime_out()*1000-(5*3600+30*60)*1000);
             TimeTable timeTable=new TimeTable(timeTableDTO.getDay(),
-                    new java.sql.Time(timeTableDTO.getTime_in()),
-                    new java.sql.Time(timeTableDTO.getTime_out()),
+                    tin,
+                    tout,
                     doc);
             currentSession.persist(timeTable);
             entityManager.clear();
