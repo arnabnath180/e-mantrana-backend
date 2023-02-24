@@ -1,6 +1,8 @@
 package com.example.emantranabackend.Repository.Implementation;
 
 import com.example.emantranabackend.DTO.DoctorRegistrationRequestDTO;
+import com.example.emantranabackend.DTO.GetDoctorRequestDTO;
+import com.example.emantranabackend.DTO.GetDoctorResponseDTO;
 import com.example.emantranabackend.DTO.TimeTableDTO;
 import com.example.emantranabackend.Model.Doctor;
 import com.example.emantranabackend.Model.TimeTable;
@@ -46,5 +48,17 @@ public class AdminInterfaceImplementation implements AdminInterface {
             entityManager.clear();
         }
         return true;
+    }
+    public GetDoctorResponseDTO getDoctor(GetDoctorRequestDTO email){
+        Session currentSession=entityManager.unwrap(Session.class);
+        Query q=currentSession.createQuery("from Doctor d where d.email=:email");
+        q.setParameter("email", email.getEmail());
+        Doctor doc=(Doctor)q.list().get(0);
+        GetDoctorResponseDTO doctorResponseDTO=new GetDoctorResponseDTO(doc.getFname(),
+                doc.getLname(), doc.getType(),
+                doc.getEmail(), doc.getPh_number(),
+                doc.getPatient_count());
+        entityManager.clear();
+        return doctorResponseDTO;
     }
 }
